@@ -4,6 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 /*
  * Korzystając z mechanizmów kolekcji (w tym z odwzorowań/map) zmodyfikuj
  * poniższy kod tak, żeby na standardowym wyjściu produkować „indeks wystapień
@@ -29,10 +33,13 @@ public class Ex03 {
 
 	public static void main(String[] args) {
 		String fname = "Machiavelli.txt";
+		Map<String,Set<Integer>> zbior =new TreeMap <>();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(fname));
 			String line = br.readLine();
+			int i=0;
 			while (line != null) {
+				i++;
 				// oczyszczamy tekst ze znaków interpunkcyjnych, liczb itp.
 				line = line.replaceAll("\\d+|[:,\\.\"\\?!;\\-/]|\\b[XIV]+\\b", " ");
 				// usuwamy ewentualne odstępy na początku i na końcu linii
@@ -40,9 +47,12 @@ public class Ex03 {
 				if (!line.matches("^\\s*$")) {
 					String[] words = line.split("\\s+");
 					for (String w : words) {
-						System.out.print(w.toLowerCase() + " –– ");
+						Set<Integer> klucz = new TreeSet<>();
+						klucz.add(i);
+						zbior.put(w.toLowerCase(), (klucz));
+						//System.out.print(w.toLowerCase() + " –– ");
 					}
-					System.out.println();
+					//System.out.println();
 				}
 				line = br.readLine();
 			}
@@ -52,6 +62,8 @@ public class Ex03 {
 		} catch (IOException e) {
 			System.out.println("Błąd podczas czytania z pliku" + fname);
 		}
+		
+		System.out.println(zbior);
 	}
 
 }
