@@ -51,7 +51,7 @@ public class Ex03 {
                                         	
                                     	if(zbior.containsKey(w))
                                         	{
-                                        			zbior.get(w).add(i);
+                                        		zbior.get(w).add(i);
                                         	}
                                         	else
                                         	{
@@ -61,7 +61,7 @@ public class Ex03 {
                                               
                                         }
                                         }
-                                       System.out.println();
+                                        
                                 }
                                 line = br.readLine();
                         }
