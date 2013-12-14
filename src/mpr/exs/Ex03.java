@@ -31,39 +31,55 @@ import java.util.TreeSet;
  */
 public class Ex03 {
 
-	public static void main(String[] args) {
-		String fname = "Machiavelli.txt";
-		Map<String,Set<Integer>> zbior =new TreeMap <>();
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(fname));
-			String line = br.readLine();
-			int i=0;
-			while (line != null) {
-				i++;
-				// oczyszczamy tekst ze znaków interpunkcyjnych, liczb itp.
-				line = line.replaceAll("\\d+|[:,\\.\"\\?!;\\-/]|\\b[XIV]+\\b", " ");
-				// usuwamy ewentualne odstępy na początku i na końcu linii
-				line = line.replaceAll("^\\s+|\\s+$", "");
-				if (!line.matches("^\\s*$")) {
-					String[] words = line.split("\\s+");
-					for (String w : words) {
-						Set<Integer> klucz = new TreeSet<>();
-						klucz.add(i);
-						zbior.put(w.toLowerCase(), (klucz));
-						//System.out.print(w.toLowerCase() + " –– ");
-					}
-					//System.out.println();
-				}
-				line = br.readLine();
-			}
-			br.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Nie mogę otworzyć pliku " + fname);
-		} catch (IOException e) {
-			System.out.println("Błąd podczas czytania z pliku" + fname);
-		}
-		
-		System.out.println(zbior);
-	}
-
+        public static void main(String[] args) {
+                String fname = "Machiavelli.txt";
+                Map<String,Set<Integer>> zbior =new TreeMap <>();
+              
+                try {
+                        BufferedReader br = new BufferedReader(new FileReader(fname));
+                        String line = br.readLine();
+                      int i=1;
+                        while (line != null) {
+                                i++;
+                                // oczyszczamy tekst ze znaków interpunkcyjnych, liczb itp.
+                                line = line.replaceAll("\\d+|[:,\\.\"\\?!;\\-/]|\\b[XIV]+\\b", " ");
+                                // usuwamy ewentualne odstępy na początku i na końcu linii
+                                line = line.replaceAll("^\\s+|\\s+$", "");
+                                if (!line.matches("^\\s*$")) {
+                                        String[] words = line.split("\\s+");
+                                        for (String w : words) {
+                                        	
+                                    	if(zbior.containsKey(w))
+                                        	{
+                                        			zbior.get(w).add(i);
+                                        	}
+                                        	else
+                                        	{
+                                                Set<Integer> klucz = new TreeSet<Integer>();
+                                                zbior.put(w, klucz);
+                                                zbior.get(w).add(i);
+                                              
+                                        }
+                                        }
+                                       System.out.println();
+                                }
+                                line = br.readLine();
+                        }
+                        
+                        br.close();
+                        
+                   	 for(String d : zbior.keySet()) {
+                   		System.out.println(d); 
+            			 System.out.println(zbior.get(d));  
+            			 }
+                   		                   		 
+                        
+                } catch (FileNotFoundException e) {
+                        System.out.println("Nie mogę otworzyć pliku " + fname);
+                } catch (IOException e) {
+                        System.out.println("Błąd podczas czytania z pliku" + fname);
+                }
+                
+               
+        }
 }
